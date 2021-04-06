@@ -77,6 +77,11 @@ print(y_test.shape)
 formula = 'Best3BenchKg ~ ' + ' + '.join(X.columns.drop('Best3BenchKg'))
 model = smf.ols(formula,data = X_train).fit()
 model.summary()
+#%%
+for col in X_train.columns:
+    predictions = model.predict(X_train)
+    fig = px.scatter(x=X_train[col], y=y_train-predictions,labels={"x":col,"y":"residuals"})
+    fig.show()
 # %%
 # Use the test data to calculate the performance of the model
 predictions = model.predict(X_test)
